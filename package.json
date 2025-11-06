@@ -1,0 +1,41 @@
+{
+  "name": "afpi-crm",
+  "version": "1.0.0",
+  "description": "Application CRM pour la gestion commerciale des formations AFPI",
+  "scripts": {
+    "format": "prettier --write \"**/*.{ts,js,json,html,css,scss,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,html,css,scss,md}\"",
+    "lint": "npm run lint:backend && npm run lint:frontend",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:fix": "npm run lint:backend:fix && npm run lint:frontend:fix",
+    "lint:backend:fix": "cd backend && npm run lint:fix",
+    "lint:frontend:fix": "cd frontend && npm run lint:fix",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:clean": "docker-compose down -v"
+  },
+  "keywords": [
+    "crm",
+    "nestjs",
+    "angular",
+    "typescript",
+    "afpi",
+    "formation"
+  ],
+  "author": "AFPI",
+  "license": "PROPRIETARY",
+  "devDependencies": {
+    "prettier": "^3.1.0",
+    "eslint": "^8.55.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

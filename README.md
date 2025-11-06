@@ -7,12 +7,16 @@ Application complète de CRM pour la gestion commerciale des formations AFPI ave
 - [Vue d'ensemble](#vue-densemble)
 - [Architecture](#architecture)
 - [Fonctionnalités](#fonctionnalités)
+- [Démarrage rapide avec Docker](#démarrage-rapide-avec-docker)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Utilisation](#utilisation)
 - [Workflow des opportunités](#workflow-des-opportunités)
 - [Hiérarchie des droits](#hiérarchie-des-droits)
 - [API Documentation](#api-documentation)
+- [Dashboard KPIs](#dashboard-kpis)
+- [Standards et Qualité](#standards-et-qualité)
+- [Documentation](#documentation)
 
 ---
 
@@ -37,9 +41,57 @@ AFPI CRM est une solution complète pour gérer le processus commercial des form
 - Chart.js
 - Ngx-Toastr
 
+**Qualité & Monitoring:**
+- ESLint & Prettier (Linting et formatage)
+- Prometheus & Grafana (Monitoring)
+- Winston (Logs structurés)
+- Docker Compose (Conteneurisation)
+- WCAG 2.1 AA (Accessibilité)
+
 ---
 
 ## 🏗️ Architecture
+
+### Diagramme d'architecture complet
+
+Pour une vue détaillée de l'architecture système, consultez [ARCHITECTURE.md](./ARCHITECTURE.md).
+
+**Vue simplifiée :**
+
+```
+┌─────────────┐
+│ UTILISATEURS│
+└──────┬──────┘
+       │
+┌──────▼──────────┐
+│  Frontend       │
+│  Angular 17     │ ──> Accessible (WCAG 2.1 AA)
+│  (Port 4200)    │ ──> Gestion d'erreurs utilisateur
+└──────┬──────────┘
+       │ HTTP/REST
+┌──────▼──────────┐
+│  Backend NestJS │
+│  (Port 3000)    │ ──> Intercepteurs d'erreurs
+│                 │ ──> Logs structurés (Winston)
+└─┬───┬────┬──────┘
+  │   │    │
+  │   │    └──────> Ypareo API (Sync)
+  │   │
+  │   └──────> Redis (Bull Queue)
+  │            (Port 6379)
+  │
+  └──────> MariaDB (Base de données)
+           (Port 3306)
+           + Mock data pour tests
+
+┌─────────────────────────────┐
+│  Monitoring Stack           │
+│  - Prometheus (Port 9090)   │ ──> Métriques
+│  - Grafana (Port 3001)      │ ──> Dashboards & Alertes
+└─────────────────────────────┘
+```
+
+### Structure des fichiers
 
 ```
 afpi-crm-complete/
@@ -89,10 +141,12 @@ afpi-crm-complete/
 - Historique des opportunités
 - Synchronisation Ypareo
 
-### 3. Suivi des objectifs
+### 3. Suivi des objectifs et Dashboard KPIs
 - Objectifs par utilisateur ou localisation
-- KPIs : CA, nb opportunités, taux conversion
-- Tableaux de bord personnalisés
+- **KPIs en temps réel** : CA, nb opportunités, taux conversion
+- **Dashboard métrique** avec graphiques (Chart.js)
+- Tableaux de bord personnalisés par rôle
+- Suivi de performance par période
 
 ### 4. Synchronisation Ypareo
 - Configuration de la fréquence de sync
@@ -112,7 +166,60 @@ afpi-crm-complete/
 
 ---
 
-## 🚀 Installation
+## 🐳 Démarrage rapide avec Docker
+
+La façon la plus rapide de tester l'application avec des données mockées !
+
+### Pré-requis
+- Docker 20+ et Docker Compose 2+
+
+### Lancement
+
+```bash
+# Cloner le dépôt
+git clone https://github.com/acaucheteur/CRM-Angular-17.git
+cd CRM-Angular-17
+
+# Lancer tous les services
+docker-compose up -d
+
+# Vérifier que tous les services sont démarrés
+docker-compose ps
+```
+
+### Services disponibles
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| Frontend | http://localhost:4200 | Application Angular |
+| Backend | http://localhost:3000 | API NestJS |
+| API Docs | http://localhost:3000/api/docs | Documentation Swagger |
+| Grafana | http://localhost:3001 | Dashboards (admin/admin) |
+| Prometheus | http://localhost:9090 | Métriques |
+
+### Données mockées
+
+Le conteneur MariaDB est automatiquement initialisé avec :
+- ✅ 7 rôles utilisateurs
+- ✅ 14 localisations AFPI
+- ✅ 7 utilisateurs de test (voir [Utilisation](#utilisation))
+- ✅ 5 entreprises exemples
+- ✅ 5 opportunités dans différents états
+- ✅ Objectifs KPIs pour Q1 et Q2 2024
+
+### Arrêter les services
+
+```bash
+# Arrêter tous les services
+docker-compose down
+
+# Arrêter et supprimer les volumes (données)
+docker-compose down -v
+```
+
+---
+
+## 🚀 Installation locale
 
 ### Prérequis
 
@@ -353,6 +460,141 @@ Documentation complète : `http://localhost:3000/api/docs`
 
 ---
 
+## 📊 Dashboard KPIs
+
+### Métriques métier en temps réel
+
+Le dashboard principal affiche les indicateurs clés de performance :
+
+#### KPIs globaux
+- **Chiffre d'affaires (CA)** : Total et par localisation
+- **Nombre d'opportunités** : Créées, en cours, converties
+- **Taux de conversion** : Pourcentage d'opportunités converties en formations
+- **Pipeline commercial** : Valeur totale des opportunités en cours
+
+#### Visualisations disponibles
+- **Graphique de conversion** : Évolution du taux de conversion par trimestre
+- **CA par localisation** : Comparaison des performances entre les 14 centres AFPI
+- **Statut des opportunités** : Répartition par section (1-6)
+- **Objectifs vs Réalisations** : Suivi des performances individuelles et d'équipe
+
+#### Accès selon les rôles
+- **Administrateur** : Vue complète de toutes les localisations
+- **Responsable Commercial** : Vue de toutes les localisations avec drill-down
+- **Manager** : Vue de sa localisation uniquement
+- **Commercial** : Vue de ses opportunités personnelles
+
+### Monitoring et alertes
+
+Grafana dashboard accessible sur `http://localhost:3001` (admin/admin) inclut :
+- Métriques système (CPU, RAM, DB connections)
+- Métriques applicatives (HTTP requests, response times, error rates)
+- Métriques métier (opportunités, CA, conversions)
+- Alertes configurables pour anomalies et incidents
+
+---
+
+## 🎨 Standards et Qualité
+
+### Linting et formatage
+
+Le projet utilise **ESLint** et **Prettier** pour garantir la qualité et l'uniformité du code.
+
+```bash
+# Formater tout le code
+npm run format
+
+# Vérifier le linting
+npm run lint
+
+# Corriger automatiquement
+npm run lint:fix
+```
+
+Configuration :
+- `.eslintrc.json` : Règles ESLint pour TypeScript
+- `.prettierrc` : Configuration Prettier
+- `.prettierignore` : Fichiers exclus du formatage
+
+### Accessibilité (WCAG 2.1 AA)
+
+L'application respecte les standards d'accessibilité WCAG 2.1 niveau AA :
+- Navigation complète au clavier
+- Labels ARIA pour les lecteurs d'écran
+- Contrastes de couleurs conformes
+- Messages d'erreur descriptifs
+- Support des technologies d'assistance
+
+Voir [ACCESSIBILITY.md](./ACCESSIBILITY.md) pour les détails complets.
+
+### Gestion des erreurs
+
+#### Backend (NestJS)
+- **Exception filters** : Gestion centralisée des erreurs
+- **Validation pipes** : Validation automatique des DTOs
+- **TypeORM interceptors** : Transformation des erreurs SQL en messages utilisateur
+
+#### Frontend (Angular)
+- **HTTP interceptors** : Interception et traitement des erreurs API
+- **Global error handler** : Gestion des erreurs JavaScript
+- **Toastr notifications** : Messages utilisateur clairs et contextuels
+
+Voir [ERROR_HANDLING.md](./ERROR_HANDLING.md) pour l'implémentation complète.
+
+---
+
+## 📚 Documentation
+
+### Pour les développeurs
+
+- **[DEVELOPER.md](./DEVELOPER.md)** : Guide complet de développement
+  - Configuration de l'environnement
+  - Architecture détaillée
+  - Tests et debugging
+  - Performance et sécurité
+
+- **[STYLE_GUIDE.md](./STYLE_GUIDE.md)** : Standards de code
+  - Conventions de nommage
+  - Bonnes pratiques TypeScript
+  - Structure des composants
+  - Patterns recommandés
+
+- **[CONTRIBUTING.md](./CONTRIBUTING.md)** : Guide de contribution
+  - Processus de développement
+  - Format des commits
+  - Pull requests
+  - Code de conduite
+
+### Architecture et Ops
+
+- **[ARCHITECTURE.md](./ARCHITECTURE.md)** : Diagrammes et flux
+  - Vue d'ensemble du système
+  - Flux de données
+  - Modèle de données
+  - Infrastructure de déploiement
+
+- **[MONITORING.md](./MONITORING.md)** : Observabilité
+  - Logs structurés (Winston)
+  - Métriques (Prometheus)
+  - Dashboards (Grafana)
+  - Alertes et runbook
+
+### Standards et qualité
+
+- **[ACCESSIBILITY.md](./ACCESSIBILITY.md)** : Accessibilité WCAG
+  - Principes et checklist
+  - Navigation au clavier
+  - Lecteurs d'écran
+  - Outils de test
+
+- **[ERROR_HANDLING.md](./ERROR_HANDLING.md)** : Gestion d'erreurs
+  - Stratégie backend (NestJS)
+  - Stratégie frontend (Angular)
+  - Codes d'erreur
+  - Messages utilisateur
+
+---
+
 ## 🧪 Tests
 
 ```bash
@@ -391,15 +633,17 @@ npm run build
 ## 🤝 Support
 
 Pour toute question ou problème :
-1. Consulter la documentation Swagger
+1. Consulter la [documentation](#documentation) appropriée
 2. Vérifier les logs backend : `logs/app.log`
-3. Vérifier les logs Ypareo dans l'interface d'administration
+3. Consulter Grafana pour les métriques : `http://localhost:3001`
+4. Vérifier les logs Ypareo dans l'interface d'administration
+5. Ouvrir une issue sur GitHub
 
 ---
 
 ## 📝 Licence
 
-Ce projet est propriétaire - AFPI
+Ce projet est propriétaire - AFPI. Tous droits réservés.
 
 ---
 
@@ -410,3 +654,21 @@ Ce projet est propriétaire - AFPI
 - Mot de passe : `Admin123!`
 
 ⚠️ **Important : Changez ce mot de passe dès la première connexion !**
+
+### Checklist de mise en production
+
+Avant de déployer en production, assurez-vous de :
+- [ ] Changer tous les mots de passe par défaut
+- [ ] Configurer les variables d'environnement de production
+- [ ] Activer HTTPS avec des certificats valides
+- [ ] Configurer les sauvegardes automatiques de la base de données
+- [ ] Mettre en place les alertes de monitoring
+- [ ] Vérifier la conformité WCAG avec les outils de test
+- [ ] Effectuer un audit de sécurité
+- [ ] Documenter les procédures de déploiement
+- [ ] Tester les procédures de récupération après incident
+- [ ] Former les utilisateurs finaux
+
+---
+
+**Développé avec ❤️ pour AFPI**
