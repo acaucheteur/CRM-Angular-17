@@ -1,0 +1,198 @@
+<!-- Example: Dashboard KPI Template for Angular Frontend -->
+<!-- Path: frontend/src/app/modules/dashboard/components/kpi-dashboard/kpi-dashboard.component.html -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="mb-4">Tableau de Bord - KPIs</h1>
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border" role="status" aria-live="polite">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div *ngIf="!loading" class="row">
+    <!-- Chiffre d'Affaires -->
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                Chiffre d'Affaires
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ kpiData.totalCA | number: '1.0-0' }} €
+              </div>
+              <div class="text-xs text-muted mt-1">
+                Objectif: {{ kpiData.targetCA | number: '1.0-0' }} €
+              </div>
+              <div class="progress mt-2" style="height: 10px">
+                <div
+                  class="progress-bar bg-primary"
+                  role="progressbar"
+                  [style.width.%]="caPercentage"
+                  [attr.aria-valuenow]="caPercentage"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+              <small class="text-muted">{{ caPercentage | number: '1.1-1' }}% de l'objectif</small>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-euro-sign fa-2x text-gray-300" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nombre d'Opportunités -->
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                Opportunités
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ kpiData.totalOpportunites }}
+              </div>
+              <div class="text-xs text-muted mt-1">
+                Objectif: {{ kpiData.targetOpportunites }}
+              </div>
+              <div class="progress mt-2" style="height: 10px">
+                <div
+                  class="progress-bar bg-success"
+                  role="progressbar"
+                  [style.width.%]="opportunitesPercentage"
+                  [attr.aria-valuenow]="opportunitesPercentage"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+              <small class="text-muted">{{ opportunitesPercentage | number: '1.1-1' }}% de l'objectif</small>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-briefcase fa-2x text-gray-300" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Taux de Conversion -->
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                Taux de Conversion
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ kpiData.conversionRate | number: '1.1-1' }}%
+              </div>
+              <div class="text-xs text-muted mt-1">
+                Objectif: {{ kpiData.targetConversionRate | number: '1.1-1' }}%
+              </div>
+              <div class="progress mt-2" style="height: 10px">
+                <div
+                  class="progress-bar bg-info"
+                  role="progressbar"
+                  [style.width.%]="conversionPercentage"
+                  [attr.aria-valuenow]="conversionPercentage"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+              <small class="text-muted">{{ conversionPercentage | number: '1.1-1' }}% de l'objectif</small>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-chart-line fa-2x text-gray-300" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div *ngIf="!loading" class="row">
+    <!-- CA par Localisation -->
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">CA par Localisation</h6>
+        </div>
+        <div class="card-body">
+          <div style="height: 300px">
+            <canvas id="caChart" aria-label="Graphique du CA par localisation"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Taux de Conversion par Localisation -->
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Taux de Conversion par Localisation</h6>
+        </div>
+        <div class="card-body">
+          <div style="height: 300px">
+            <canvas id="conversionChart" aria-label="Graphique du taux de conversion par localisation"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Performance Table -->
+  <div *ngIf="!loading && localisationPerformance.length > 0" class="row">
+    <div class="col-12">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Performance par Localisation</h6>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped" aria-label="Tableau de performance par localisation">
+              <thead>
+                <tr>
+                  <th scope="col">Localisation</th>
+                  <th scope="col" class="text-right">CA (€)</th>
+                  <th scope="col" class="text-right">Opportunités</th>
+                  <th scope="col" class="text-right">Taux de Conversion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let perf of localisationPerformance">
+                  <td>{{ perf.name }}</td>
+                  <td class="text-right">{{ perf.ca | number: '1.0-0' }} €</td>
+                  <td class="text-right">{{ perf.opportunites }}</td>
+                  <td class="text-right">
+                    <span
+                      class="badge"
+                      [class.badge-success]="perf.conversion >= 70"
+                      [class.badge-warning]="perf.conversion >= 50 && perf.conversion < 70"
+                      [class.badge-danger]="perf.conversion < 50"
+                    >
+                      {{ perf.conversion | number: '1.1-1' }}%
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
