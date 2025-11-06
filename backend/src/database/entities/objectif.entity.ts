@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('objectifs')
 export class Objectif {
@@ -17,10 +23,10 @@ export class Objectif {
   @Column({ nullable: true })
   localisationId: number;
 
-  @Column({ 
-    type: 'enum', 
+  @Column({
+    type: 'enum',
     enum: ['ca', 'nb_opportunites', 'taux_conversion'],
-    default: 'ca'
+    default: 'ca',
   })
   typeObjectif: string;
 

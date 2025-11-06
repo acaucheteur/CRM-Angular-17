@@ -24,7 +24,17 @@ export class CreateOpportuniteDto {
   montant?: number;
 
   @IsOptional()
-  @IsEnum(['nouveau', 'section1', 'section2', 'section3', 'section4', 'section5', 'section6', 'gagne', 'perdu'])
+  @IsEnum([
+    'nouveau',
+    'section1',
+    'section2',
+    'section3',
+    'section4',
+    'section5',
+    'section6',
+    'gagne',
+    'perdu',
+  ])
   statut?: string;
 
   @IsOptional()

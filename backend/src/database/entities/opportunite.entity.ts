@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('opportunites')
 export class Opportunite {
@@ -23,10 +29,20 @@ export class Opportunite {
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
   montant: number;
 
-  @Column({ 
-    type: 'enum', 
-    enum: ['nouveau', 'section1', 'section2', 'section3', 'section4', 'section5', 'section6', 'gagne', 'perdu'],
-    default: 'nouveau'
+  @Column({
+    type: 'enum',
+    enum: [
+      'nouveau',
+      'section1',
+      'section2',
+      'section3',
+      'section4',
+      'section5',
+      'section6',
+      'gagne',
+      'perdu',
+    ],
+    default: 'nouveau',
   })
   statut: string;
 

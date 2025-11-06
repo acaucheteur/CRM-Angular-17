@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('ypareo_config')
 export class YpareoConfig {
@@ -14,10 +20,10 @@ export class YpareoConfig {
   @Column({ type: 'int', default: 3600 })
   syncFrequency: number;
 
-  @Column({ 
-    type: 'enum', 
+  @Column({
+    type: 'enum',
     enum: ['read', 'write', 'read_write'],
-    default: 'read'
+    default: 'read',
   })
   syncMode: string;
 

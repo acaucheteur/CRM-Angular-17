@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('notifications')
 export class Notification {
@@ -14,10 +20,10 @@ export class Notification {
   @Column({ type: 'text' })
   message: string;
 
-  @Column({ 
-    type: 'enum', 
+  @Column({
+    type: 'enum',
     enum: ['info', 'success', 'warning', 'error'],
-    default: 'info'
+    default: 'info',
   })
   type: string;
 
