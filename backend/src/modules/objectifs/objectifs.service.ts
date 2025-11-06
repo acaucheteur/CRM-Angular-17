@@ -30,9 +30,9 @@ export class ObjectifsService {
   }
 
   async update(id: number, updateObjectifDto: UpdateObjectifDto): Promise<Objectif> {
-    await this.findOne(id);
-    await this.objectifRepository.update(id, updateObjectifDto);
-    return this.findOne(id);
+    const objectif = await this.findOne(id);
+    Object.assign(objectif, updateObjectifDto);
+    return this.objectifRepository.save(objectif);
   }
 
   async remove(id: number): Promise<void> {

@@ -30,9 +30,9 @@ export class LocalisationsService {
   }
 
   async update(id: number, updateLocalisationDto: UpdateLocalisationDto): Promise<Localisation> {
-    await this.findOne(id);
-    await this.localisationRepository.update(id, updateLocalisationDto);
-    return this.findOne(id);
+    const localisation = await this.findOne(id);
+    Object.assign(localisation, updateLocalisationDto);
+    return this.localisationRepository.save(localisation);
   }
 
   async remove(id: number): Promise<void> {

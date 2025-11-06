@@ -30,9 +30,9 @@ export class FormateursService {
   }
 
   async update(id: number, updateFormateurDto: UpdateFormateurDto): Promise<Formateur> {
-    await this.findOne(id);
-    await this.formateurRepository.update(id, updateFormateurDto);
-    return this.findOne(id);
+    const formateur = await this.findOne(id);
+    Object.assign(formateur, updateFormateurDto);
+    return this.formateurRepository.save(formateur);
   }
 
   async remove(id: number): Promise<void> {

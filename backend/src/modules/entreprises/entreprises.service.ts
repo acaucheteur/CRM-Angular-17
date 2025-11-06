@@ -30,9 +30,9 @@ export class EntreprisesService {
   }
 
   async update(id: number, updateEntrepriseDto: UpdateEntrepriseDto): Promise<Entreprise> {
-    await this.findOne(id);
-    await this.entrepriseRepository.update(id, updateEntrepriseDto);
-    return this.findOne(id);
+    const entreprise = await this.findOne(id);
+    Object.assign(entreprise, updateEntrepriseDto);
+    return this.entrepriseRepository.save(entreprise);
   }
 
   async remove(id: number): Promise<void> {

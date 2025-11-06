@@ -30,9 +30,9 @@ export class PluginsService {
   }
 
   async update(id: number, updatePluginDto: UpdatePluginDto): Promise<Plugin> {
-    await this.findOne(id);
-    await this.pluginRepository.update(id, updatePluginDto);
-    return this.findOne(id);
+    const plugin = await this.findOne(id);
+    Object.assign(plugin, updatePluginDto);
+    return this.pluginRepository.save(plugin);
   }
 
   async remove(id: number): Promise<void> {

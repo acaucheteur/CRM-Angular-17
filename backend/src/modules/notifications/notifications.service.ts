@@ -30,9 +30,9 @@ export class NotificationsService {
   }
 
   async update(id: number, updateNotificationDto: UpdateNotificationDto): Promise<Notification> {
-    await this.findOne(id);
-    await this.notificationRepository.update(id, updateNotificationDto);
-    return this.findOne(id);
+    const notification = await this.findOne(id);
+    Object.assign(notification, updateNotificationDto);
+    return this.notificationRepository.save(notification);
   }
 
   async remove(id: number): Promise<void> {

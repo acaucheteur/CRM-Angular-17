@@ -30,9 +30,9 @@ export class YpareoService {
   }
 
   async update(id: number, updateYpareoConfigDto: UpdateYpareoConfigDto): Promise<YpareoConfig> {
-    await this.findOne(id);
-    await this.ypareoConfigRepository.update(id, updateYpareoConfigDto);
-    return this.findOne(id);
+    const config = await this.findOne(id);
+    Object.assign(config, updateYpareoConfigDto);
+    return this.ypareoConfigRepository.save(config);
   }
 
   async remove(id: number): Promise<void> {

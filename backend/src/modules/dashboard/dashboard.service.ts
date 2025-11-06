@@ -30,9 +30,9 @@ export class DashboardService {
   }
 
   async update(id: number, updateDashboardStatDto: UpdateDashboardStatDto): Promise<DashboardStat> {
-    await this.findOne(id);
-    await this.dashboardStatRepository.update(id, updateDashboardStatDto);
-    return this.findOne(id);
+    const stat = await this.findOne(id);
+    Object.assign(stat, updateDashboardStatDto);
+    return this.dashboardStatRepository.save(stat);
   }
 
   async remove(id: number): Promise<void> {

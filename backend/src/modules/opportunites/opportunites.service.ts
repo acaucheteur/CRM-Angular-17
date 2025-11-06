@@ -30,9 +30,9 @@ export class OpportunitesService {
   }
 
   async update(id: number, updateOpportuniteDto: UpdateOpportuniteDto): Promise<Opportunite> {
-    await this.findOne(id);
-    await this.opportuniteRepository.update(id, updateOpportuniteDto);
-    return this.findOne(id);
+    const opportunite = await this.findOne(id);
+    Object.assign(opportunite, updateOpportuniteDto);
+    return this.opportuniteRepository.save(opportunite);
   }
 
   async remove(id: number): Promise<void> {
