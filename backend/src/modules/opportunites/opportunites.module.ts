@@ -7,4 +7,4 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   controllers: [],
   exports: [],
 })
-export class Module {}
+export class OpportunitesModule {}
