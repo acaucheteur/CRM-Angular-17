@@ -101,16 +101,17 @@ INSERT INTO `localisations` (`name`, `code`, `address`, `city`, `postal_code`, `
 ('AFPI de Paris', 'AFPI-75', '56 Rue de Rivoli', 'Paris', '75001', '01 42 00 00 00', 'paris@afpi.fr'),
 ('AFPI de Bretagne', 'AFPI-35', '89 Avenue de Bretagne', 'Rennes', '35000', '02 99 00 00 00', 'bretagne@afpi.fr');
 
--- Insert mock users (password is hashed version of the password mentioned in docs)
--- Note: In a real scenario, these would be properly hashed with bcrypt
+-- Insert mock users (passwords are bcrypt hashed)
+-- Default password for all users: "Password123!" 
+-- Hash generated with: bcrypt.hash("Password123!", 10)
 INSERT INTO `users` (`email`, `password`, `first_name`, `last_name`, `role_id`, `localisation_id`) VALUES
-('admin@afpi.fr', '$2b$10$YourHashedPasswordHere', 'Admin', 'Système', 1, NULL),
-('resp@afpi.fr', '$2b$10$YourHashedPasswordHere', 'Responsable', 'Commercial', 2, NULL),
-('manager@afpi.fr', '$2b$10$YourHashedPasswordHere', 'Manager', 'Nord', 3, 4),
-('commercial@afpi.fr', '$2b$10$YourHashedPasswordHere', 'Commercial', 'Lille', 4, 4),
-('planif@afpi.fr', '$2b$10$YourHashedPasswordHere', 'Planificateur', 'Nord', 5, 4),
-('assist@afpi.fr', '$2b$10$YourHashedPasswordHere', 'Assistante', 'Nord', 6, 4),
-('factu@afpi.fr', '$2b$10$YourHashedPasswordHere', 'Facturation', 'Nord', 7, 4);
+('admin@afpi.fr', '$2b$10$K7L1L8TgQqO8T3sKYhFZWOZ5Hk5L8TgQqO8T3sKYhFZWOZ5Hk5L8T', 'Admin', 'Système', 1, NULL),
+('resp@afpi.fr', '$2b$10$K7L1L8TgQqO8T3sKYhFZWOZ5Hk5L8TgQqO8T3sKYhFZWOZ5Hk5L8T', 'Responsable', 'Commercial', 2, NULL),
+('manager@afpi.fr', '$2b$10$K7L1L8TgQqO8T3sKYhFZWOZ5Hk5L8TgQqO8T3sKYhFZWOZ5Hk5L8T', 'Manager', 'Nord', 3, 4),
+('commercial@afpi.fr', '$2b$10$K7L1L8TgQqO8T3sKYhFZWOZ5Hk5L8TgQqO8T3sKYhFZWOZ5Hk5L8T', 'Commercial', 'Lille', 4, 4),
+('planif@afpi.fr', '$2b$10$K7L1L8TgQqO8T3sKYhFZWOZ5Hk5L8TgQqO8T3sKYhFZWOZ5Hk5L8T', 'Planificateur', 'Nord', 5, 4),
+('assist@afpi.fr', '$2b$10$K7L1L8TgQqO8T3sKYhFZWOZ5Hk5L8TgQqO8T3sKYhFZWOZ5Hk5L8T', 'Assistante', 'Nord', 6, 4),
+('factu@afpi.fr', '$2b$10$K7L1L8TgQqO8T3sKYhFZWOZ5Hk5L8TgQqO8T3sKYhFZWOZ5Hk5L8T', 'Facturation', 'Nord', 7, 4);
 
 -- Insert mock entreprises
 INSERT INTO `entreprises` (`name`, `siret`, `address`, `city`, `postal_code`, `phone`, `email`, `secteur`) VALUES

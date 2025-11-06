@@ -170,6 +170,8 @@ import { KpiDashboardComponent } from './components/kpi-dashboard/kpi-dashboard.
 export class DashboardModule {}
 ```
 
+**Note:** Ce composant nécessite un `DashboardService`. Créez-le comme suit:
+
 ```typescript
 // dashboard.service.ts (à créer)
 import { Injectable } from '@angular/core';

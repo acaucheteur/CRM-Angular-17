@@ -4,6 +4,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { Chart, ChartConfiguration } from 'chart.js/auto';
+import { DashboardService } from '../../services/dashboard.service';
 
 interface KPIData {
   totalCA: number;
