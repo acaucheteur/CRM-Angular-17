@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Objectif } from '../../database/entities/objectif.entity';
+import { Objectif } from './objectif.entity';
 import { CreateObjectifDto } from './dto/create-objectif.dto';
 import { UpdateObjectifDto } from './dto/update-objectif.dto';
 
@@ -16,7 +16,7 @@ export class ObjectifsService {
     return this.objectifRepository.find();
   }
 
-  async findOne(id: number): Promise<Objectif> {
+  async findOne(id: string): Promise<Objectif> {
     const objectif = await this.objectifRepository.findOne({ where: { id } });
     if (!objectif) {
       throw new NotFoundException(`Objectif avec l'ID ${id} non trouvé`);
@@ -29,13 +29,13 @@ export class ObjectifsService {
     return this.objectifRepository.save(objectif);
   }
 
-  async update(id: number, updateObjectifDto: UpdateObjectifDto): Promise<Objectif> {
+  async update(id: string, updateObjectifDto: UpdateObjectifDto): Promise<Objectif> {
     const objectif = await this.findOne(id);
     Object.assign(objectif, updateObjectifDto);
     return this.objectifRepository.save(objectif);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const objectif = await this.findOne(id);
     await this.objectifRepository.remove(objectif);
   }

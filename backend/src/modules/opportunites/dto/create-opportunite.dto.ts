@@ -1,4 +1,5 @@
 import { IsString, IsOptional, IsNumber, IsEnum, IsDateString } from 'class-validator';
+import { OpportuniteStatut } from '../opportunite.entity';
 
 export class CreateOpportuniteDto {
   @IsString()
@@ -8,34 +9,24 @@ export class CreateOpportuniteDto {
   @IsString()
   description?: string;
 
-  @IsNumber()
-  entrepriseId: number;
+  @IsString()
+  entrepriseId: string;
 
   @IsOptional()
-  @IsNumber()
-  utilisateurId?: number;
+  @IsString()
+  utilisateurId?: string;
 
   @IsOptional()
-  @IsNumber()
-  localisationId?: number;
+  @IsString()
+  localisationId?: string;
 
   @IsOptional()
   @IsNumber()
   montant?: number;
 
   @IsOptional()
-  @IsEnum([
-    'nouveau',
-    'section1',
-    'section2',
-    'section3',
-    'section4',
-    'section5',
-    'section6',
-    'gagne',
-    'perdu',
-  ])
-  statut?: string;
+  @IsEnum(OpportuniteStatut)
+  statut?: OpportuniteStatut;
 
   @IsOptional()
   @IsNumber()

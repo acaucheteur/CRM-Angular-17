@@ -38,7 +38,7 @@ export class ObjectifsController {
   @ApiResponse({ status: 200, description: 'Objectif trouvé' })
   @ApiResponse({ status: 404, description: 'Objectif non trouvé' })
   findOne(@Param('id') id: string) {
-    return this.objectifsService.findOne(+id);
+    return this.objectifsService.findOne(id);
   }
 
   @Patch(':id')
@@ -46,7 +46,7 @@ export class ObjectifsController {
   @ApiResponse({ status: 200, description: 'Objectif mis à jour avec succès' })
   @ApiResponse({ status: 404, description: 'Objectif non trouvé' })
   update(@Param('id') id: string, @Body() updateObjectifDto: UpdateObjectifDto) {
-    return this.objectifsService.update(+id, updateObjectifDto);
+    return this.objectifsService.update(id, updateObjectifDto);
   }
 
   @Delete(':id')
@@ -55,6 +55,6 @@ export class ObjectifsController {
   @ApiResponse({ status: 204, description: 'Objectif supprimé avec succès' })
   @ApiResponse({ status: 404, description: 'Objectif non trouvé' })
   remove(@Param('id') id: string) {
-    return this.objectifsService.remove(+id);
+    return this.objectifsService.remove(id);
   }
 }

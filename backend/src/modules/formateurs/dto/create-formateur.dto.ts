@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsEmail, IsArray, IsNumber, IsBoolean } from 'class-validator';
+import { IsString, IsOptional, IsEmail, IsArray, IsBoolean } from 'class-validator';
 
 export class CreateFormateurDto {
   @IsString()
@@ -20,8 +20,8 @@ export class CreateFormateurDto {
   specialites?: string[];
 
   @IsOptional()
-  @IsNumber()
-  localisationId?: number;
+  @IsString()
+  localisationId?: string;
 
   @IsOptional()
   @IsBoolean()

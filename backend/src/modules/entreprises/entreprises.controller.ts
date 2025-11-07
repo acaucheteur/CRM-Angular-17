@@ -38,7 +38,7 @@ export class EntreprisesController {
   @ApiResponse({ status: 200, description: 'Entreprise trouvée' })
   @ApiResponse({ status: 404, description: 'Entreprise non trouvée' })
   findOne(@Param('id') id: string) {
-    return this.entreprisesService.findOne(+id);
+    return this.entreprisesService.findOne(id);
   }
 
   @Patch(':id')
@@ -46,7 +46,7 @@ export class EntreprisesController {
   @ApiResponse({ status: 200, description: 'Entreprise mise à jour avec succès' })
   @ApiResponse({ status: 404, description: 'Entreprise non trouvée' })
   update(@Param('id') id: string, @Body() updateEntrepriseDto: UpdateEntrepriseDto) {
-    return this.entreprisesService.update(+id, updateEntrepriseDto);
+    return this.entreprisesService.update(id, updateEntrepriseDto);
   }
 
   @Delete(':id')
@@ -55,6 +55,6 @@ export class EntreprisesController {
   @ApiResponse({ status: 204, description: 'Entreprise supprimée avec succès' })
   @ApiResponse({ status: 404, description: 'Entreprise non trouvée' })
   remove(@Param('id') id: string) {
-    return this.entreprisesService.remove(+id);
+    return this.entreprisesService.remove(id);
   }
 }

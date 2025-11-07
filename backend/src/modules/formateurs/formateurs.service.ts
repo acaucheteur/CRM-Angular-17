@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Formateur } from '../../database/entities/formateur.entity';
+import { Formateur } from './formateur.entity';
 import { CreateFormateurDto } from './dto/create-formateur.dto';
 import { UpdateFormateurDto } from './dto/update-formateur.dto';
 
@@ -16,7 +16,7 @@ export class FormateursService {
     return this.formateurRepository.find();
   }
 
-  async findOne(id: number): Promise<Formateur> {
+  async findOne(id: string): Promise<Formateur> {
     const formateur = await this.formateurRepository.findOne({ where: { id } });
     if (!formateur) {
       throw new NotFoundException(`Formateur avec l'ID ${id} non trouvé`);
@@ -29,13 +29,13 @@ export class FormateursService {
     return this.formateurRepository.save(formateur);
   }
 
-  async update(id: number, updateFormateurDto: UpdateFormateurDto): Promise<Formateur> {
+  async update(id: string, updateFormateurDto: UpdateFormateurDto): Promise<Formateur> {
     const formateur = await this.findOne(id);
     Object.assign(formateur, updateFormateurDto);
     return this.formateurRepository.save(formateur);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const formateur = await this.findOne(id);
     await this.formateurRepository.remove(formateur);
   }
