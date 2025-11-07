@@ -51,7 +51,11 @@ export async function seedAdminUser(dataSource: DataSource): Promise<void> {
 
     await userRepository.save(adminUser);
     console.log(`  ✓ Created admin user: ${adminEmail}`);
-    console.log(`  ℹ️  Default password: ${defaultPassword} (Please change after first login)`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`  ℹ️  Please change the default password after first login`);
+    } else {
+      console.log(`  ⚠️  IMPORTANT: Set a secure password for the admin user immediately!`);
+    }
   } else {
     console.log(`  ⊙ Admin user already exists: ${adminEmail}`);
   }
