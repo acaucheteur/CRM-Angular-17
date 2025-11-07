@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import { config as dotenvConfig } from 'dotenv';
+import * as path from 'path';
 import { seedRoles } from './role.seed';
 import { seedPermissions } from './permission.seed';
 import { seedLocalisations } from './localisation.seed';
@@ -17,7 +18,7 @@ async function runSeeds() {
     username: process.env.DB_USERNAME || 'root',
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_DATABASE || 'afpi_crm',
-    entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
+    entities: [path.join(__dirname, '../../**/*.entity{.ts,.js}')],
     synchronize: false,
     logging: true,
     charset: 'utf8mb4',

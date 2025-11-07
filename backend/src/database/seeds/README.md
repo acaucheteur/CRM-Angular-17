@@ -25,6 +25,9 @@ DB_PORT=3306
 DB_USERNAME=afpi_crm_user
 DB_PASSWORD=VotreMotDePasseSecurise123!
 DB_DATABASE=afpi_crm
+
+# Optional: Set a custom default password for the admin user
+ADMIN_DEFAULT_PASSWORD=YourSecurePasswordHere
 ```
 
 ## Exécution des Seeds
@@ -87,10 +90,12 @@ Crée les localisations AFPI suivantes :
 ### 4. Utilisateur Administrateur (user.seed.ts)
 Crée un compte administrateur par défaut :
 - **Email** : admin@afpi-crm.fr
-- **Mot de passe** : Admin123!
+- **Mot de passe** : Configurable via `ADMIN_DEFAULT_PASSWORD` (défaut: Admin123!)
 - **Rôle** : Administrateur
 
-⚠️ **Important** : Changez le mot de passe après la première connexion !
+⚠️ **Important** : 
+- Définissez `ADMIN_DEFAULT_PASSWORD` dans votre fichier `.env` pour un mot de passe sécurisé
+- Changez le mot de passe après la première connexion !
 
 ## Réexécution des Seeds
 

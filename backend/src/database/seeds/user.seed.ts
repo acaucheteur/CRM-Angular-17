@@ -32,9 +32,12 @@ export async function seedAdminUser(dataSource: DataSource): Promise<void> {
   });
 
   if (!existingAdmin) {
+    // Use environment variable for password or fallback to default
+    const defaultPassword = process.env.ADMIN_DEFAULT_PASSWORD || 'Admin123!';
+    
     const adminUser = userRepository.create({
       email: adminEmail,
-      password: 'Admin123!', // This will be hashed by the entity's BeforeInsert hook
+      password: defaultPassword, // This will be hashed by the entity's BeforeInsert hook
       firstName: 'Admin',
       lastName: 'AFPI',
       phone: '03 23 26 30 00',
@@ -42,13 +45,13 @@ export async function seedAdminUser(dataSource: DataSource): Promise<void> {
       isLdapUser: false,
       role: adminRole,
       roleId: adminRole.id,
-      localisation: defaultLocalisation,
-      localisationId: defaultLocalisation?.id,
+      localisation: defaultLocalisation || undefined,
+      localisationId: defaultLocalisation?.id || null,
     });
 
     await userRepository.save(adminUser);
     console.log(`  ✓ Created admin user: ${adminEmail}`);
-    console.log(`  ℹ️  Default password: Admin123! (Please change after first login)`);
+    console.log(`  ℹ️  Default password: ${defaultPassword} (Please change after first login)`);
   } else {
     console.log(`  ⊙ Admin user already exists: ${adminEmail}`);
   }
