@@ -34,7 +34,7 @@ export async function seedAdminUser(dataSource: DataSource): Promise<void> {
   if (!existingAdmin) {
     // Use environment variable for password or fallback to default
     const defaultPassword = process.env.ADMIN_DEFAULT_PASSWORD || 'Admin123!';
-    
+
     const adminUser = userRepository.create({
       email: adminEmail,
       password: defaultPassword, // This will be hashed by the entity's BeforeInsert hook
