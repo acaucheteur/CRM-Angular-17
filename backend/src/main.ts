@@ -6,7 +6,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
+
   const configService = app.get(ConfigService);
   const port = configService.get('APP_PORT') || 3000;
   const appEnv = configService.get('APP_ENV') || 'development';
@@ -51,13 +51,13 @@ async function bootstrap() {
       .addTag('ypareo', 'Synchronisation avec Ypareo')
       .addTag('plugins', 'Système de plugins')
       .build();
-    
+
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api/docs', app, document);
   }
 
   await app.listen(port);
-  
+
   console.log(`
 ╔═══════════════════════════════════════════════════════════╗
 ║                                                           ║

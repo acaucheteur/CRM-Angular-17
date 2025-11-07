@@ -26,7 +26,7 @@ async function runSeeds() {
 
   try {
     console.log('🌱 Starting database seeding...');
-    
+
     await dataSource.initialize();
     console.log('✅ Database connection established');
 

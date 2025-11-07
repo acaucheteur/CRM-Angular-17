@@ -34,7 +34,7 @@ export async function seedRoles(dataSource: DataSource): Promise<void> {
     {
       name: 'Manager',
       type: RoleType.MANAGER,
-      description: 'Gestion d\'une localisation et de son équipe',
+      description: "Gestion d'une localisation et de son équipe",
       level: 2,
       permissionFilter: (perm: Permission) => {
         const managedResources = [
@@ -56,11 +56,9 @@ export async function seedRoles(dataSource: DataSource): Promise<void> {
       permissionFilter: (perm: Permission) => {
         if (perm.resource === PermissionResource.OPPORTUNITES) return true;
         if (perm.resource === PermissionResource.ENTREPRISES) {
-          return [
-            PermissionAction.READ,
-            PermissionAction.CREATE,
-            PermissionAction.UPDATE,
-          ].includes(perm.action);
+          return [PermissionAction.READ, PermissionAction.CREATE, PermissionAction.UPDATE].includes(
+            perm.action,
+          );
         }
         if (perm.resource === PermissionResource.DASHBOARD) {
           return perm.action === PermissionAction.READ;
@@ -80,9 +78,7 @@ export async function seedRoles(dataSource: DataSource): Promise<void> {
           PermissionResource.DASHBOARD,
         ];
         if (!managedResources.includes(perm.resource)) return false;
-        return [PermissionAction.READ, PermissionAction.UPDATE].includes(
-          perm.action,
-        );
+        return [PermissionAction.READ, PermissionAction.UPDATE].includes(perm.action);
       },
     },
     {
@@ -97,11 +93,9 @@ export async function seedRoles(dataSource: DataSource): Promise<void> {
           PermissionResource.DASHBOARD,
         ];
         if (!managedResources.includes(perm.resource)) return false;
-        return [
-          PermissionAction.READ,
-          PermissionAction.CREATE,
-          PermissionAction.UPDATE,
-        ].includes(perm.action);
+        return [PermissionAction.READ, PermissionAction.CREATE, PermissionAction.UPDATE].includes(
+          perm.action,
+        );
       },
     },
     {
@@ -116,9 +110,11 @@ export async function seedRoles(dataSource: DataSource): Promise<void> {
           PermissionResource.DASHBOARD,
         ];
         if (!managedResources.includes(perm.resource)) return false;
-        return perm.action === PermissionAction.READ ||
+        return (
+          perm.action === PermissionAction.READ ||
           (perm.resource === PermissionResource.OPPORTUNITES &&
-            perm.action === PermissionAction.UPDATE);
+            perm.action === PermissionAction.UPDATE)
+        );
       },
     },
   ];
@@ -145,9 +141,7 @@ export async function seedRoles(dataSource: DataSource): Promise<void> {
         permissions: rolePermissions,
       });
       await roleRepository.save(role);
-      console.log(
-        `  ✓ Created role: ${roleData.name} with ${rolePermissions.length} permissions`,
-      );
+      console.log(`  ✓ Created role: ${roleData.name} with ${rolePermissions.length} permissions`);
     } else {
       // Update permissions if role already exists
       exists.permissions = rolePermissions;

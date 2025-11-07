@@ -10,7 +10,7 @@ export async function seedLocalisations(dataSource: DataSource): Promise<void> {
   const localisationsData = [
     {
       code: 'AISNE',
-      name: 'AFPI de l\'Aisne',
+      name: "AFPI de l'Aisne",
       ville: 'Laon',
       address: 'Parc Technologique Delta 3',
       codePostal: '02000',
@@ -21,7 +21,7 @@ export async function seedLocalisations(dataSource: DataSource): Promise<void> {
     },
     {
       code: 'OISE',
-      name: 'AFPI de l\'Oise',
+      name: "AFPI de l'Oise",
       ville: 'Beauvais',
       address: 'Avenue du Parc',
       codePostal: '60000',
