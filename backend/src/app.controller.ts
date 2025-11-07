@@ -8,15 +8,15 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Health check de l\'API' })
-  @ApiResponse({ status: 200, description: 'L\'API fonctionne correctement' })
+  @ApiOperation({ summary: "Health check de l'API" })
+  @ApiResponse({ status: 200, description: "L'API fonctionne correctement" })
   getHello(): object {
     return this.appService.getAppInfo();
   }
 
   @Get('health')
-  @ApiOperation({ summary: 'Vérification de la santé de l\'API' })
-  @ApiResponse({ status: 200, description: 'L\'API est opérationnelle' })
+  @ApiOperation({ summary: "Vérification de la santé de l'API" })
+  @ApiResponse({ status: 200, description: "L'API est opérationnelle" })
   healthCheck(): object {
     return {
       status: 'ok',

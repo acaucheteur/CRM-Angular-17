@@ -16,32 +16,32 @@ export enum OpportuniteStatut {
   // SECTION 1 : COLLECTE D'INFORMATIONS (Commercial)
   EN_COURS_COLLECTE = 'en_cours_collecte',
   EN_ATTENTE_VALIDATION_RESP = 'en_attente_validation_resp',
-  
+
   // SECTION 2 : DEVIS (Responsable)
   EN_COURS_DEVIS = 'en_cours_devis',
   DEVIS_ENVOYE = 'devis_envoye',
   DEVIS_ACCEPTE = 'devis_accepte',
   DEVIS_REFUSE = 'devis_refuse',
-  
+
   // SECTION 3 : MONTAGE ADMINISTRATIF (Assistante)
   EN_COURS_MONTAGE = 'en_cours_montage',
   EN_ATTENTE_FINANCEMENT = 'en_attente_financement',
   FINANCEMENT_VALIDE = 'financement_valide',
-  
+
   // SECTION 4 : PLANIFICATION (Planificateur)
   EN_COURS_PLANIFICATION = 'en_cours_planification',
   PLANIFIE = 'planifie',
-  
+
   // SECTION 5 : DOCUMENTS ADMINISTRATIFS (Assistante)
   EN_COURS_DOCUMENTS = 'en_cours_documents',
   PRET_FORMATION = 'pret_formation',
-  
+
   // SECTION 6 : FACTURATION
   EN_COURS_FACTURATION = 'en_cours_facturation',
   FACTURE = 'facture',
   PAYE = 'paye',
   TERMINE = 'termine',
-  
+
   // Statuts spéciaux
   ANNULE = 'annule',
   EN_ATTENTE = 'en_attente',

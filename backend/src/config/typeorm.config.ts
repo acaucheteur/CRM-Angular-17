@@ -1,9 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-export const typeOrmConfig = (
-  configService: ConfigService,
-): TypeOrmModuleOptions => ({
+export const typeOrmConfig = (configService: ConfigService): TypeOrmModuleOptions => ({
   type: 'mariadb',
   host: configService.get('DB_HOST'),
   port: configService.get<number>('DB_PORT'),
