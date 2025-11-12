@@ -9,12 +9,12 @@ export class CreateObjectifDto {
   description?: string;
 
   @IsOptional()
-  @IsNumber()
-  utilisateurId?: number;
+  @IsString()
+  utilisateurId?: string;
 
   @IsOptional()
-  @IsNumber()
-  localisationId?: number;
+  @IsString()
+  localisationId?: string;
 
   @IsEnum(['ca', 'nb_opportunites', 'taux_conversion'])
   typeObjectif: string;

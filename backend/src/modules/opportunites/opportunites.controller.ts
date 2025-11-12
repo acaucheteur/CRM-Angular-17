@@ -38,7 +38,7 @@ export class OpportunitesController {
   @ApiResponse({ status: 200, description: 'Opportunité trouvée' })
   @ApiResponse({ status: 404, description: 'Opportunité non trouvée' })
   findOne(@Param('id') id: string) {
-    return this.opportunitesService.findOne(+id);
+    return this.opportunitesService.findOne(id);
   }
 
   @Patch(':id')
@@ -46,7 +46,7 @@ export class OpportunitesController {
   @ApiResponse({ status: 200, description: 'Opportunité mise à jour avec succès' })
   @ApiResponse({ status: 404, description: 'Opportunité non trouvée' })
   update(@Param('id') id: string, @Body() updateOpportuniteDto: UpdateOpportuniteDto) {
-    return this.opportunitesService.update(+id, updateOpportuniteDto);
+    return this.opportunitesService.update(id, updateOpportuniteDto);
   }
 
   @Delete(':id')
@@ -55,6 +55,6 @@ export class OpportunitesController {
   @ApiResponse({ status: 204, description: 'Opportunité supprimée avec succès' })
   @ApiResponse({ status: 404, description: 'Opportunité non trouvée' })
   remove(@Param('id') id: string) {
-    return this.opportunitesService.remove(+id);
+    return this.opportunitesService.remove(id);
   }
 }

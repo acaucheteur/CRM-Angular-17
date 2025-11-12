@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Localisation } from '../../database/entities/localisation.entity';
+import { Localisation } from './localisation.entity';
 import { CreateLocalisationDto } from './dto/create-localisation.dto';
 import { UpdateLocalisationDto } from './dto/update-localisation.dto';
 
@@ -16,7 +16,7 @@ export class LocalisationsService {
     return this.localisationRepository.find();
   }
 
-  async findOne(id: number): Promise<Localisation> {
+  async findOne(id: string): Promise<Localisation> {
     const localisation = await this.localisationRepository.findOne({ where: { id } });
     if (!localisation) {
       throw new NotFoundException(`Localisation avec l'ID ${id} non trouvée`);
@@ -29,13 +29,13 @@ export class LocalisationsService {
     return this.localisationRepository.save(localisation);
   }
 
-  async update(id: number, updateLocalisationDto: UpdateLocalisationDto): Promise<Localisation> {
+  async update(id: string, updateLocalisationDto: UpdateLocalisationDto): Promise<Localisation> {
     const localisation = await this.findOne(id);
     Object.assign(localisation, updateLocalisationDto);
     return this.localisationRepository.save(localisation);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const localisation = await this.findOne(id);
     await this.localisationRepository.remove(localisation);
   }

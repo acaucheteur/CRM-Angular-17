@@ -38,7 +38,7 @@ export class LocalisationsController {
   @ApiResponse({ status: 200, description: 'Localisation trouvée' })
   @ApiResponse({ status: 404, description: 'Localisation non trouvée' })
   findOne(@Param('id') id: string) {
-    return this.localisationsService.findOne(+id);
+    return this.localisationsService.findOne(id);
   }
 
   @Patch(':id')
@@ -46,7 +46,7 @@ export class LocalisationsController {
   @ApiResponse({ status: 200, description: 'Localisation mise à jour avec succès' })
   @ApiResponse({ status: 404, description: 'Localisation non trouvée' })
   update(@Param('id') id: string, @Body() updateLocalisationDto: UpdateLocalisationDto) {
-    return this.localisationsService.update(+id, updateLocalisationDto);
+    return this.localisationsService.update(id, updateLocalisationDto);
   }
 
   @Delete(':id')
@@ -55,6 +55,6 @@ export class LocalisationsController {
   @ApiResponse({ status: 204, description: 'Localisation supprimée avec succès' })
   @ApiResponse({ status: 404, description: 'Localisation non trouvée' })
   remove(@Param('id') id: string) {
-    return this.localisationsService.remove(+id);
+    return this.localisationsService.remove(id);
   }
 }

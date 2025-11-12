@@ -38,7 +38,7 @@ export class FormateursController {
   @ApiResponse({ status: 200, description: 'Formateur trouvé' })
   @ApiResponse({ status: 404, description: 'Formateur non trouvé' })
   findOne(@Param('id') id: string) {
-    return this.formateursService.findOne(+id);
+    return this.formateursService.findOne(id);
   }
 
   @Patch(':id')
@@ -46,7 +46,7 @@ export class FormateursController {
   @ApiResponse({ status: 200, description: 'Formateur mis à jour avec succès' })
   @ApiResponse({ status: 404, description: 'Formateur non trouvé' })
   update(@Param('id') id: string, @Body() updateFormateurDto: UpdateFormateurDto) {
-    return this.formateursService.update(+id, updateFormateurDto);
+    return this.formateursService.update(id, updateFormateurDto);
   }
 
   @Delete(':id')
@@ -55,6 +55,6 @@ export class FormateursController {
   @ApiResponse({ status: 204, description: 'Formateur supprimé avec succès' })
   @ApiResponse({ status: 404, description: 'Formateur non trouvé' })
   remove(@Param('id') id: string) {
-    return this.formateursService.remove(+id);
+    return this.formateursService.remove(id);
   }
 }
